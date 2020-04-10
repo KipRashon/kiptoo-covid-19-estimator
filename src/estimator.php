@@ -27,11 +27,15 @@ function covid19ImpactEstimator($data)
 }
 
 //getting the impact
-function get_impact($reportedCases,$hospitalBeds,$days)
+function get_impact($data,$hospitalBeds,$days)
 {
-  $impactCurrentlyInfected = $reportedCases*10;
-  $infectionsByRequestedTime = $impactCurrentlyInfected * pow(2,$days);
+
+  $impactCurrentlyInfected = $data['reportedCases']*10;
+  
+  $infectionsByRequestedTime = $severeImpactCurrentlyInfected * pow(2,floor($days/3 ));
   $severeCasesByRequestedTime = 0.15 * $infectionsByRequestedTime;
+  //calculation of dollarInFlight
+  $dollarInFlight =number_format((float)($infectionsByRequestedTime *$data['region']['avgDailyIncomePopulation'] * $data['region']['avgDailyIncomeInUSD']  * $days),2,".","");
   $impact = array(
           "currentlyInfected"=>$impactCurrentlyInfected,
           "infectionsByRequestedTime"=>$infectionsByRequestedTime,
@@ -39,18 +43,27 @@ function get_impact($reportedCases,$hospitalBeds,$days)
           "hospitalBedsByRequestedTime"=>($hospitalBeds-$severeCasesByRequestedTime),
           "casesForICUByRequestedTime"=>(0.05 * $infectionsByRequestedTime),
           "casesForVentilatorsByRequestedTime"=>(0.02 * $infectionsByRequestedTime),
-          "dollarsInFlight"=>number_format((float)($infectionsByRequestedTime *0.65 * 1.5 * 30),2,".","")  //converts to two decimal places  
+          "dollarsInFlight"=>$dollarInFlight
   );
 
   return $impact;
 }
 
 //function to get the severe impact
-function get_severe_impact($reportedCases,$hospitalBeds,$days)
+function get_severe_impact($data,$hospitalBeds,$days)
 {
-  $severeImpactCurrentlyInfected = $reportedCases * 50;
-  $infectionsByRequestedTime = $severeImpactCurrentlyInfected * pow(2,$days);
+  $severeImpactCurrentlyInfected = $data['reportedCases'] * 50;
+
+  //calculation of the number of days
+  $infectionsByRequestedTime = $severeImpactCurrentlyInfected * pow(2,floor($days/3 ));
+
+  //calculation of cases requested overtime
   $severeCasesByRequestedTime = 0.15 * $infectionsByRequestedTime;
+
+   //calculation of dollarInFlight
+   $dollarInFlight =number_format((float)($infectionsByRequestedTime *$data['region']['avgDailyIncomePopulation'] * $data['region']['avgDailyIncomeInUSD']  * $days),2,".","");
+
+
   $severeImpact = array(
           "currentlyInfected"=>$severeImpactCurrentlyInfected,
           "infectionsByRequestedTime"=>$infectionsByRequestedTime,
@@ -58,7 +71,7 @@ function get_severe_impact($reportedCases,$hospitalBeds,$days)
           "hospitalBedsByRequestedTime"=>($hospitalBeds-$severeCasesByRequestedTime),
           "casesForICUByRequestedTime"=>(0.05 * $infectionsByRequestedTime),
           "casesForVentilatorsByRequestedTime"=>(0.02 * $infectionsByRequestedTime),
-          "dollarsInFlight"=>number_format((float)($infectionsByRequestedTime *0.65 * 1.5 * 30),2,".","")  //converts to two decimal places      
+          "dollarsInFlight"=>$dollarInFlight
   );
   return $severeImpact;
 }
@@ -84,6 +97,6 @@ function get_num_days($type,$number)
       echo "Unknown Time format";
       $days = 0;
   }
-  $days = floor($days/3 );
+
   return $days;
 }
