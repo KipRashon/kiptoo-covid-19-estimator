@@ -81,7 +81,8 @@ function get_num_days($type,$number)
       echo "Unknown Time format";
       $days = 0;
       break;
-  
+      //change the days to periods
+      $days = (int)$days/3;
   return $days;
   }
 }
