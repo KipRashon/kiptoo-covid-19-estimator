@@ -2,6 +2,7 @@
 
 function covid19ImpactEstimator($data)
 {
+  
   //Number of days 
   $days = get_num_days($data["periodType"],$data['timeToElapse']);
   //Hospital Beds 
@@ -65,6 +66,7 @@ function get_severe_impact($reportedCases,$hospitalBeds,$days)
 function get_num_days($type,$number)
 {
   $days = 0;
+  $number = intval($number);
   switch ($type) {
     case 'days':
       # code...
@@ -80,9 +82,7 @@ function get_num_days($type,$number)
       # code...
       echo "Unknown Time format";
       $days = 0;
-      break;
-      //change the days to periods
-      $days = (int)$days/3;
-  return $days;
   }
+  $days = floor($days/3 );
+  return $days;
 }
