@@ -6,7 +6,7 @@ function covid19ImpactEstimator($data)
   //Number of days 
   $days = get_num_days($data["periodType"],$data['timeToElapse']);
   //Hospital Beds 
-  $availableBeds = ceil($data['totalHospitalBeds'] * 0.35);
+  $availableBeds = floor($data['totalHospitalBeds'] * 0.35);
   //reported cases 
   $reportedCases = $data['reportedCases'];
   //Calculating the impact
