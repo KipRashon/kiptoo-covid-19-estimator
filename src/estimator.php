@@ -32,7 +32,7 @@ function get_impact($data,$hospitalBeds,$days)
 
   $impactCurrentlyInfected = $data['reportedCases']*10;
   
-  $infectionsByRequestedTime = $severeImpactCurrentlyInfected * pow(2,floor($days/3 ));
+  $infectionsByRequestedTime = $impactCurrentlyInfected * pow(2,floor($days/3 ));
   $severeCasesByRequestedTime = 0.15 * $infectionsByRequestedTime;
   //calculation of dollarInFlight
   $dollarInFlight =number_format((float)($infectionsByRequestedTime *$data['region']['avgDailyIncomePopulation'] * $data['region']['avgDailyIncomeInUSD']  * $days),2,".","");
