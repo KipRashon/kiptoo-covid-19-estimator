@@ -32,14 +32,14 @@ function get_impact($reportedCases,$hospitalBeds,$days,$region)
   $impactCurrentlyInfected = $reportedCases*10;
   $infectionsByRequestedTime = $impactCurrentlyInfected * pow(2,floor($days/3));
   $severeCasesByRequestedTime = 0.15 * $infectionsByRequestedTime;
-  $dollarFlight = number_format((float)($infectionsByRequestedTime *$region['avgDailyIncomePopulation'] * $region['avgDailyIncomeInUSD'] * $days),2,".","");  //converts to two decimal places
+  $dollarFlight = floor($infectionsByRequestedTime *$region['avgDailyIncomePopulation'] * $region['avgDailyIncomeInUSD'] / $days);  
   $impact = array(
           "currentlyInfected"=>$impactCurrentlyInfected,
           "infectionsByRequestedTime"=>$infectionsByRequestedTime,
           "severeCasesByRequestedTime" => $severeCasesByRequestedTime,
           "hospitalBedsByRequestedTime"=>($hospitalBeds-$severeCasesByRequestedTime),
-          "casesForICUByRequestedTime"=>(0.05 * $infectionsByRequestedTime),
-          "casesForVentilatorsByRequestedTime"=>(0.02 * $infectionsByRequestedTime),
+          "casesForICUByRequestedTime"=>floor(0.05 * $infectionsByRequestedTime),
+          "casesForVentilatorsByRequestedTime"=>floor(0.02 * $infectionsByRequestedTime),
           "dollarsInFlight"=>  $dollarFlight
   );
 
@@ -52,15 +52,15 @@ function get_severe_impact($reportedCases,$hospitalBeds,$days,$region)
   $severeImpactCurrentlyInfected = $reportedCases * 50;
   $infectionsByRequestedTime = $severeImpactCurrentlyInfected * pow(2,floor($days/3));
   $severeCasesByRequestedTime = 0.15 * $infectionsByRequestedTime;
-  $dollarFlight = number_format((float)($infectionsByRequestedTime *$region['avgDailyIncomePopulation'] * $region['avgDailyIncomeInUSD'] * $days),2,".","");  //converts to two decimal places
+  $dollarFlight = floor($infectionsByRequestedTime * $region['avgDailyIncomePopulation'] * $region['avgDailyIncomeInUSD'] / $days);  
 
   $severeImpact = array(
           "currentlyInfected"=>$severeImpactCurrentlyInfected,
           "infectionsByRequestedTime"=>$infectionsByRequestedTime,
           "severeCasesByRequestedTime"=>$severeCasesByRequestedTime,
           "hospitalBedsByRequestedTime"=>($hospitalBeds-$severeCasesByRequestedTime),
-          "casesForICUByRequestedTime"=>(0.05 * $infectionsByRequestedTime),
-          "casesForVentilatorsByRequestedTime"=>(0.02 * $infectionsByRequestedTime),
+          "casesForICUByRequestedTime"=>floor(0.05 * $infectionsByRequestedTime),
+          "casesForVentilatorsByRequestedTime"=>floor(0.02 * $infectionsByRequestedTime),
           "dollarsInFlight"=>$dollarFlight
   );
   return $severeImpact;
