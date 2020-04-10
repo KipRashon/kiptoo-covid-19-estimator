@@ -78,6 +78,7 @@ function get_num_days($type,$number)
       break;
     case 'weeks':
       $days = $number * 7;
+      break;
     default:
       # code...
       echo "Unknown Time format";
