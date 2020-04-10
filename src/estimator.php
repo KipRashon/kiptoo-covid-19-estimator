@@ -6,14 +6,14 @@ function covid19ImpactEstimator($data)
   //Number of days 
   $days = get_num_days($data["periodType"],$data['timeToElapse']);
   //Hospital Beds 
-  $hospitalBeds = $data['totalHospitalBeds'];
+  $availableBeds = $data['totalHospitalBeds']*0.35;
   //reported cases 
   $reportedCases = $data['reportedCases'];
   //Calculating the impact
-  $impact = get_impact($reportedCases,$hospitalBeds,$days);
+  $impact = get_impact($reportedCases,$availableBeds,$days);
 
   //Calculation of the severe impact
-  $severeImpact = get_severe_impact($reportedCases,$hospitalBeds,$days);
+  $severeImpact = get_severe_impact($reportedCases,$availableBeds,$days);
 
   //calculation of severe  cases requested by time
   //combining the return data 
