@@ -6,7 +6,7 @@ function covid19ImpactEstimator($data)
   //Number of days 
   $days = get_num_days($data["periodType"],$data['timeToElapse']);
   //Hospital Beds 
-  $availableBeds = $data['totalHospitalBeds']*0.35;
+  $availableBeds = floor($data['totalHospitalBeds']*0.35);
   //reported cases 
   $reportedCases = $data['reportedCases'];
   //Calculating the impact
@@ -36,7 +36,7 @@ function get_impact($reportedCases,$hospitalBeds,$days)
           "currentlyInfected"=>$impactCurrentlyInfected,
           "infectionsByRequestedTime"=>$infectionsByRequestedTime,
           "severeCasesByRequestedTime" => $severeCasesByRequestedTime,
-          "hospitalBedsByRequestedTime"=>($severeCasesByRequestedTime-$hospitalBeds),
+          "hospitalBedsByRequestedTime"=>($hospitalBeds-$severeCasesByRequestedTime),
           "casesForICUByRequestedTime"=>(0.05 * $infectionsByRequestedTime),
           "casesForVentilatorsByRequestedTime"=>(0.02 * $infectionsByRequestedTime),
           "dollarsInFlight"=>number_format((float)($infectionsByRequestedTime *0.65 * 1.5 * 30),2,".","")  //converts to two decimal places  
@@ -55,7 +55,7 @@ function get_severe_impact($reportedCases,$hospitalBeds,$days)
           "currentlyInfected"=>$severeImpactCurrentlyInfected,
           "infectionsByRequestedTime"=>$infectionsByRequestedTime,
           "severeCasesByRequestedTime"=>$severeCasesByRequestedTime,
-          "hospitalBedsByRequestedTime"=>($severeCasesByRequestedTime-$hospitalBeds),
+          "hospitalBedsByRequestedTime"=>($hospitalBeds-$severeCasesByRequestedTime),
           "casesForICUByRequestedTime"=>(0.05 * $infectionsByRequestedTime),
           "casesForVentilatorsByRequestedTime"=>(0.02 * $infectionsByRequestedTime),
           "dollarsInFlight"=>number_format((float)($infectionsByRequestedTime *0.65 * 1.5 * 30),2,".","")  //converts to two decimal places      
