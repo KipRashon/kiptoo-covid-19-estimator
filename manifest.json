@@ -1,0 +1,28 @@
+{
+    "name": "Only Manifest",
+    "short_name": "only_manifest",
+    "description": "dummy application to demo manifest without SW",
+    "start_url": "/index.html",
+    "scope": ".",
+    "background_color": "#EEE",
+    "theme_color": "#4A148C",
+    "display": "standalone",
+    "orientation": "portrait-primary",
+    "dir": "ltr",
+    "lang": "en-US",
+    "related_applications": [
+      {
+         "platform": "play",
+         "url": "https://play.google.com/.../app_name",
+         "id": "com.example.app"
+      }
+     ],
+    "icons": [
+      {
+        "src": "src/images/icons/app-icon-144x144.png",
+        "type": "image/png",
+        "sizes": "144x144"
+      }
+     
+     ]
+    }
