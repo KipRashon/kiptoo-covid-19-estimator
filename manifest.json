@@ -19,7 +19,7 @@
      ],
     "icons": [
       {
-        "src": "src/images/icons/app-icon.png",
+        "src": "src/images/app-icon.png",
         "type": "image/png",
         "sizes": "144x144"
       }
