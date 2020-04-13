@@ -31,7 +31,7 @@ function get_impact($reportedCases,$hospitalBeds,$days,$region)
 {
   $impactCurrentlyInfected = $reportedCases*10;
   $infectionsByRequestedTime = $impactCurrentlyInfected * pow(2,floor($days/3));
-  $severeCasesByRequestedTime = 0.15 * $infectionsByRequestedTime;
+  $severeCasesByRequestedTime = floor(0.15 * $infectionsByRequestedTime);
   $dollarFlight = floor($infectionsByRequestedTime *$region["avgDailyIncomePopulation"] * $region["avgDailyIncomeInUSD"] / $days);
   $impact = array(
           "currentlyInfected"=>$impactCurrentlyInfected,
@@ -51,7 +51,7 @@ function get_severe_impact($reportedCases,$hospitalBeds,$days,$region)
 {
   $severeImpactCurrentlyInfected = $reportedCases * 50;
   $infectionsByRequestedTime = $severeImpactCurrentlyInfected * pow(2,floor($days/3));
-  $severeCasesByRequestedTime = 0.15 * $infectionsByRequestedTime;
+  $severeCasesByRequestedTime = floor(0.15 * $infectionsByRequestedTime);
   $dollarFlight = floor($infectionsByRequestedTime * $region["avgDailyIncomePopulation"] * $region["avgDailyIncomeInUSD"] / $days);
 
   $severeImpact = array(
