@@ -6,7 +6,16 @@
     <title>Covid 19 Estimator Challenge</title>
     <link rel="manifest" href="/manifest.json">
     <link rel="stylesheet" href="./src/css/bootstrap.min.css">
-    
+    <script>
+        if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/service-worker.js')
+        .then((reg) => {
+          console.log('Service worker registered.', reg);
+        });
+  });
+}
+        </script>
 </head>
 <body>
     <div class="container">
@@ -46,13 +55,7 @@
             </form>
         </div>
     </div>
-    <script>
-        if('serviceWorker' in navigator) {
-          navigator.serviceWorker
-                   .register('/sw.js')
-                   .then(function() { console.log("Service Worker Registered"); });
-        }
-        </script>
+
 </body>
 
 <style>
