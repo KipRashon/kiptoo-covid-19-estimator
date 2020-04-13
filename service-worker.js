@@ -1,61 +1,55 @@
-var CACHE_NAME = 'kiptoo-covid-19-estimator';
-var urlsToCache = [
-    '/',
-    '/src/css/bootstrap.min.css'
-]
+//add list of files to cache 
+const FILES_TO_CACHE = [
+    'offline.html',
+    'src/css/bootstrap.min.css'
+];
+const CACHE_NAME = 'static-cache-v1';
 
-self.addEventListener('install',function(event){
-    //the installation steps 
-   event.waitUntil(
-       caches.open(CACHE_NAME)
-       .then(function(cache) {
-           console.log('Opened Cache');
-           return cache.addAll(urlsToCache);
-       })
-   )
-});
-
-self.addEventListener('fetch',function(event) {
-    event.respondWith(
-        caches.match(event.request)
-        .then(function(response) {
-            if(response){return response;}
-            return fetch(event.request).then(
-                function (response) {
-                    //Check if we recieved a valid response 
-                    if(!response || response.status !==200 || response.type !=='basic'){
-                        return response;
-                    }
-
-                    var responseToCache = response.clone();
-
-                    caches.open(CACHE_NAME)
-                    .then(function(cache){
-                        cache.put(event.request,responseToCache);
-                    });
-
-                    return response;
-                }
-            )
-        }
-        
-        )
-    )
-})
-
-self.addEventListener('activate', function(event) {
-
-    var cacheWhitelist = ['pages-cache-v1', 'blog-posts-cache-v1'];
-  
-    event.waitUntil(
-      caches.keys().then(function(cacheNames) {
-        return Promise.all(
-          cacheNames.map(function(cacheName) {
-            if (cacheWhitelist.indexOf(cacheName) === -1) {
-              return caches.delete(cacheName);
-            }
-          })
-        );
-      })
+//precache static sources
+self.addEventListener('install', (evt) => {
+    console.log('[ServiceWorker] Install');
+    // Precache static resources here.
+    evt.waitUntil(
+        caches.open(CACHE_NAME).then((cache) => {
+          console.log('[ServiceWorker] Pre-caching offline page');
+          return cache.addAll(FILES_TO_CACHE);
+        })
     );
+    self.skipWaiting();
+  }); 
+
+
+  self.addEventListener('activate', (evt) => {
+    console.log('[ServiceWorker] Activate');
+    //  Remove previous cached data from disk.
+    evt.waitUntil(
+        caches.keys().then((keyList) => {
+          return Promise.all(keyList.map((key) => {
+            if (key !== CACHE_NAME) {
+              console.log('[ServiceWorker] Removing old cache', key);
+              return caches.delete(key);
+            }
+          }));
+        })
+    );
+    self.clients.claim();
   });
+  
+  self.addEventListener('fetch', (evt) => {
+    console.log('[ServiceWorker] Fetch', evt.request.url);
+    //  Add fetch event handler here.
+    if (evt.request.mode !== 'navigate') {
+        // Not a page navigation, bail.
+        return;
+      }
+      evt.respondWith(
+          fetch(evt.request)
+              .catch(() => {
+                return caches.open(CACHE_NAME)
+                    .then((cache) => {
+                      return cache.match('offline.html');
+                    });
+              })
+      );
+  });
+  
