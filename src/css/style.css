@@ -7,8 +7,9 @@ font-size: 1rem;
 font-weight: 400;
 color: white;
 text-align: left;
+width: 100% !important;
 margin: 0 !important;
-display: inline !important;
+display: flex;
 }
 .card
 {
