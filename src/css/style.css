@@ -42,6 +42,9 @@ input{
 }@media (min-width:1200px){
 	.container{max-width:1140px}
 }
+@media (min-width:434px){
+	.container{max-width:434px;}
+}
 .text-center {
 	text-align: center !important;
 }
