@@ -12,15 +12,15 @@
     <title>Covid 19 Estimator Challenge</title>
     <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="src/css/style.css">
-    
+
 </head>
 <body>
     <div class="container">
-        <h1 class="text-center jumbotron bg-transparent col-md-7">Fill out the form below</h1>
-        
-
+    <div class="page-header">
+        <h1 class="text-center jumbotron bg-transparent">Fill out the form below</h1>
+    </div>
         <div class="row justify-content-center">
-           
+
             <div class="card col-md-7">
             <form action="process.php" method="post">
             <div class="form-group">
@@ -42,6 +42,7 @@
             <div class="form-group">
                 <label for="periodType">Choose Period Type</label>
                 <select name="periodType" id="periodType" class="form-control" data-period-type>
+                    <option value="" disabled selected>Select  Type</option>
                     <option value="days">Days</option>
                     <option value="weeks">Weeks</option>
                     <option value="months">Months</option>
