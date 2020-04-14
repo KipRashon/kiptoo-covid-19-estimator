@@ -91,6 +91,7 @@ padding-left: 2%;
 	margin-bottom: 1rem;
   padding-right: 2%;
   padding-left: 2%;
+  max-width: 90%;
 }
 .form-control {
 	display: block;
