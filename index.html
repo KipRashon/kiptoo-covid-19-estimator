@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
-    <meta name="viewport" content="width=device-width, initial-scale=2">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
     <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -12,34 +12,15 @@
     <title>Covid 19 Estimator Challenge</title>
     <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="src/css/style.css">
-    <script>
-        var resizeViewPort = function(width, height) {
-    if (window.outerWidth) {
-        window.resizeTo(
-            width + (window.outerWidth - window.innerWidth),
-            height + (window.outerHeight - window.innerHeight)
-        );
-    } else {
-        window.resizeTo(500, 500);
-        window.resizeTo(
-            width + (500 - document.body.offsetWidth),
-            height + (500 - document.body.offsetHeight)
-        );
-    }
-};
-
-window.onload(function(){
-    resuzeViewPort();
-})
-    </script>
+    
 </head>
 <body>
     <div class="container">
-
+        <h1 class="text-center jumbotron bg-transparent col-md-7">Fill out the form below</h1>
         
 
         <div class="row justify-content-center">
-            <h1 class="text-center jumbotron bg-transparent col-md-7">Fill out the form below</h1>
+           
             <div class="card col-md-7">
             <form action="process.php" method="post">
             <div class="form-group">
