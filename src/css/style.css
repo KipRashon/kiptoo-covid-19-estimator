@@ -138,3 +138,6 @@ padding-left: 2%;
   border-color: #007bff;
   color: white;
 }
+html{
+	overflow: scroll !important;
+}
