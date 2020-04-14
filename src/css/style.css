@@ -83,13 +83,13 @@ input{
 	flex: 0 0 78.333333%;
 	max-width: 78.333333%;
   width: 100%;
-padding-right: 15px;
-padding-left: 15px;
+padding-right: 2%;
+padding-left: 2%;
 }
 .form-group {
 	margin-bottom: 1rem;
-  padding-right: 15px;
-  padding-left: 15px;
+  padding-right: 2%;
+  padding-left: 2%;
 }
 .form-control {
 	display: block;
